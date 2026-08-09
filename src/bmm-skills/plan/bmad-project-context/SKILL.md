@@ -1,6 +1,6 @@
 ---
 name: bmad-project-context
-description: 'Set up or refresh agent instructions so AI agents work well in it. Use when the user says "project context", "set up AGENTS.md", "document this project", "refresh context", "audit context", wants to apply coding standards or governance to a repo, or wants to record a mistake agents keep making'
+description: 'Set up or refresh a repository''s agent instructions — a small verified block in AGENTS.md — so AI agents work well in that repo. Use when the user says "project context", "set up AGENTS.md", "document this project", "refresh context", "audit context", wants to apply coding standards or governance to a repo, or wants to record a mistake agents keep making'
 ---
 
 # Overview
