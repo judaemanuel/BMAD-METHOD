@@ -11,11 +11,11 @@ For what the skill *does* and how to run it, see [Project Context](project-conte
 
 ## The line: derivable or not
 
-Written context earns its cost only when it carries something the agent cannot derive by reading the repository.
+Written context earns its cost when it carries something the agent cannot derive by reading the repository, or a command that unaided session history shows agents still get wrong.
 
 Two results from different literatures locate the same boundary. Separating code reasoning from documentation memorization across repository-level tasks, **code access delivers the dominant gains over documentation access** — a document describing how the system works loses to the source it describes. Running the inverse experiment — generating requirements *from* code — models prove unreliable at producing anything not already implemented. Current behavior is recoverable from source. **Intent, rationale, and what was deliberately rejected are not.**
 
-So anything derivable is read live and never stored. A stored copy is a stale duplicate of something the agent reads more accurately first-hand, and it is charged on every single call.
+So derivable facts are read live and never stored. The exception is evidence of behavior: if unaided session history shows agents choose the wrong command, the exact invocation changes behavior despite being derivable. Everything else stays at its source of truth, where it cannot drift from a stored copy.
 
 ## Why most AGENTS.md files measure as worthless
 
@@ -46,7 +46,8 @@ The rule that reconciles all of it: **an index the agent must choose to fetch ge
 
 The test for every line is the **pruning test**: *would removing this line change agent behavior?*
 
-- **What a config file cannot say about running the project.** The invocation itself lives in `package.json`, a `Makefile`, or CI config and is read from there. What does not live there is the correction: the root test script does nothing in this workspace, integration tests need a service up first, the suite is slow enough that you should iterate on single files, CI runs a check the test script does not.
+- **Commands agents get wrong.** Include exact invocations only when unaided session history shows agents choose incorrectly; omit commands that history shows agents consistently get right. Aided success alone does not justify removal because the instruction may be producing that success.
+- **What a config file cannot say about running the project.** The root test script does nothing in this workspace, integration tests need a service up first, the suite is slow enough that you should iterate on single files, CI runs a check the test script does not.
 - **Policy the code cannot express.** Frozen paths, generated files, branch rules, security and compliance requirements. Admitted by authority, not by discovery.
 - **Conventions that differ from ecosystem defaults.** Only the divergences. An agent follows the norm unless told otherwise, so a fact nobody would get wrong by default is not worth a line.
 - **Known pitfalls, from observed failure only.** A repository yields hundreds of trap-looking facts, and no property of the fact separates the few that cause real mistakes — that signal exists only in observed behavior. A surprising scan finding becomes a question, never a line.
@@ -73,13 +74,13 @@ The result is small by design. When the evidence supports ten lines, ten lines i
 
 There is one rule that inverts the pruning instinct, and getting it wrong quietly destroys the best content in the file.
 
-**A policy or pitfall line retires only when the thing it guards is gone** — removed, or now mechanically enforced — **or when a human retires it.** Absence of recent failures is never grounds. A working rule erases its own evidence, and much of the value of the block is the failures that no longer happen.
+**A policy or pitfall line retires only when the thing it guards is gone** — removed, or now mechanically enforced — **or when a human retires it.** A command admitted from unaided session history retires when it is stale, wrong, superseded, or deliberately retired. Absence of recent failures is never grounds: later sessions are aided, and a working rule erases its own evidence.
 
 ## Two altitudes, two artifacts
 
 One artifact cannot serve both coding and planning work. The material divides, and the halves barely overlap.
 
-**Implementation context** — constraints, commands, conventions, pitfalls — is a property of a **code repository**. It is verifiable against the code, executably. It goes stale on every commit. It is loaded on every session, so it must be tiny. That is what this skill owns.
+**Implementation context** — constraints, commands, conventions, pitfalls — is a property of a **code repository**. Its truth is checked against the code and its need against observed agent behavior. It goes stale on every commit. It is loaded on every session, so it must be tiny. That is what this skill owns.
 
 **Planning context** — rationale, rejected approaches, ownership, domain meaning, org standards — is a property of a **project or initiative**. It is traceable only to source documents. It goes stale on organizational time, in months rather than hours. It is consulted in bursts, not loaded continuously. That is a different capability, and it is coming separately.
 

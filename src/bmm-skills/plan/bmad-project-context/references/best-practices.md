@@ -4,12 +4,13 @@ Rules for deciding what goes in the block, for judging what a repo already has, 
 
 ## The test
 
-Can an agent derive this by reading the repository? If yes, leave it out — a stored copy is a stale duplicate of something the agent reads more accurately first-hand, and it is charged on every session. Write down what the code cannot say.
+Can an agent derive this by reading the repository? If yes, leave it out — unless unaided session history shows agents still get the command wrong. A stored copy is otherwise a stale duplicate of something the agent reads more accurately first-hand, and it is charged on every session. Write down what the code cannot say and the commands unaided agents get wrong.
 
 ## Admit
 
 - **Policy the code cannot express** — branch rules, frozen and protected paths, generated files, secrets, security and compliance. Stated by a human or read off an enforcing config, never inferred.
-- **What a config file cannot say about running the project** — the root test script does nothing in this workspace, integration tests need a service up first, the suite takes eleven minutes so iterate on single files, the `Makefile` is the real entry point and `package.json` is vestigial, CI runs a typecheck the test script does not. The invocation itself is already stated in `package.json`, `Makefile`, `pyproject.toml`, or CI config and does not earn a line — the correction or the caveat does.
+- **Commands agents get wrong** — include commands that unaided session history shows agents get wrong; omit commands it shows agents consistently get right. Aided success alone does not justify removal; remove an instruction when it is stale, wrong, superseded, or deliberately retired.
+- **What a config file cannot say about running the project** — the root test script does nothing in this workspace, integration tests need a service up first, the suite takes eleven minutes so iterate on single files, the `Makefile` is the real entry point and `package.json` is vestigial, CI runs a typecheck the test script does not.
 - **Conventions that differ from ecosystem defaults.** An agent follows the norm unless told otherwise, so only the divergences earn a line.
 - **Pitfalls with observed evidence** — a recorded lesson, the maintainer's recollection, the same mistake fixed repeatedly in history, or one this session made and caught. A repo yields hundreds of trap-looking facts and none of them predict real mistakes; only observed behavior does. A surprising scan finding is a question to ask, not a line to write.
 - **Runtime behavior invisible from the repo** — replaying webhooks, lying health endpoints, environment quirks — once a human confirms it.
@@ -25,7 +26,7 @@ Prefer prohibitions to advice, and name the permitted alternative in the same li
 | Anything included for being interesting | Interest is not need |
 | Style rules an agent self-enforces | Belongs in a formatter, linter, hook, or CI check — propose the check instead |
 | Platitudes | Already the default |
-| Commands already stated in `package.json`, a `Makefile`, or CI config | Read from the source of truth; a copy drifts the moment a script is renamed |
+| Commands already stated in `package.json`, a `Makefile`, or CI config that unaided sessions consistently get right | Read from the source of truth; a copy drifts the moment a script is renamed |
 | Pasted code, changelog content, fast-changing facts | Stale immediately |
 | Aspirational state | Describe what is; intent belongs in specs |
 | History and edit narration | Git holds it; state present truth |
@@ -33,6 +34,8 @@ Prefer prohibitions to advice, and name the permitted alternative in the same li
 ## Retire
 
 A policy or pitfall line goes only when the thing it guards is gone, or the user retires it. Nothing failing lately is not evidence — a working rule erases its own evidence.
+
+A command admitted from unaided session history follows its admission rule above. Later sessions are aided, so their success alone is not evidence that the line became unnecessary.
 
 Every other line faces one question at each write: would removing it change agent behavior? If no, cut it.
 

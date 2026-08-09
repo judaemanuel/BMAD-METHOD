@@ -34,13 +34,13 @@ Point it at a repo if you're not already in one. If the path resolves to more th
 
 The first thing it does is read what's already there — `AGENTS.md`, `CLAUDE.md`, editor rule files, docs — and report back what's good, what's derivable filler, and what looks stale. A hand-written file is a baseline it improves, never something it discards.
 
-Then it asks what rules you want followed regardless of what the repo does: governance, security and compliance requirements, coding standards, style guides, frozen areas. Bring outside documents too — org handbooks, wiki exports, an MCP knowledgebase.
+Then it asks what rules you want followed regardless of what the repo does: governance, security and compliance requirements, coding standards, style guides, frozen areas. Bring outside documents and evidence too — org handbooks, wiki exports, an MCP knowledgebase, agent session history, review corrections.
 
 For a greenfield project that conversation is the whole content. For a working codebase it's the half no scan can reach.
 
 ## Step 3: It verifies the rest
 
-It checks every path a line names, and reads your `package.json`, `Makefile` and CI config — not to copy the commands out, since an agent reads those directly, but to know what they already say so the block only carries what they don't.
+It checks every path a line names and reads your `package.json`, `Makefile` and CI config so it knows what they already say. Commands unaided agents consistently get right stay out; when session history shows them choosing the wrong command, the exact invocation earns a line.
 
 Then it asks what no scan could answer: what agents keep getting wrong here, what's off limits, what a domain term means, and which commands come with a catch.
 
@@ -58,7 +58,7 @@ At the end it tells you what went in, what was left out and why, and the reasoni
 - **Record** the moment an agent gets something wrong — that's the only admissible source for a pitfall line
 - **Audit** on demand — re-verifies everything and prunes; the block ends smaller or equal, never larger
 
-A rule stays until the thing it guards is gone or you retire it. Nothing broke lately is never a reason to delete one — a working rule erases its own evidence.
+A rule stays until the thing it guards is gone or you retire it. Clean sessions after a command was added are aided, so their success alone is never a reason to delete it — a working rule erases its own evidence.
 
 ## Repo or home directory
 

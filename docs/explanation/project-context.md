@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-`bmad-project-context` sets up a repository so AI agents work well in it. The output is a small verified block inside the repo's `AGENTS.md`: what the org requires, the commands that were actually run, the conventions where the obvious guess is wrong, and the mistakes agents keep making here.
+`bmad-project-context` sets up a repository so AI agents work well in it. The output is a small verified block inside the repo's `AGENTS.md`: what the org requires, the commands unaided agents get wrong, the conventions where the obvious guess is wrong, and the mistakes agents keep making here.
 
 It is a conversation, not a generator. You bring the rules you want followed — governance, security, coding standards — and it discovers and verifies the rest. The human is in the loop for every write; there is no unattended mode.
 
@@ -13,12 +13,13 @@ For the full reasoning, including what is deliberately *not* captured and why, s
 
 ## What goes in, and what doesn't
 
-The governing line is whether a fact can be derived by reading the repository. Agents read code more accurately than they read prose describing code, and a stored description is a stale duplicate charged on every call. So repo overviews, directory trees and tech-stack lists never enter.
+The governing line is whether a fact can be derived by reading the repository. Agents read code more accurately than they read prose describing code, and a stored description is a stale duplicate charged on every call. The evidence-based exception is a command that unaided session history shows agents get wrong despite the repository stating it. So repo overviews, directory trees and tech-stack lists never enter.
 
 What earns a line is what the code cannot say:
 
 - **Policy** the org requires — frozen paths, generated files, branch rules, security and compliance.
-- **What a config file cannot say about running the project** — the caveat, not the command. `pnpm test` is already in `package.json`; that the suite takes eleven minutes, or needs a service running first, is not.
+- **Commands unaided agents get wrong**, admitted from session history. Commands agents consistently get right stay in their source of truth; aided success alone never proves an admitted instruction became unnecessary.
+- **What a config file cannot say about running the project** — `pnpm test` may be in `package.json`, but that the suite takes eleven minutes or needs a service running first is not.
 - **Conventions that differ from ecosystem defaults**, because an agent follows the norm unless told otherwise.
 - **Known pitfalls**, admitted only from observed failure — a lesson already recorded, the maintainer's recollection, a mistake fixed repeatedly in git history, or one the writing session made and caught. A trap-looking fact from a scan becomes a question, never a line.
 - **Pointers** to where work lands, and to nested or linked files worth reading first.
@@ -30,7 +31,7 @@ Every rule the skill applies is written out in `references/best-practices.md`, w
 | Intent | What it does |
 |--------|--------------|
 | **Setup** | The default. Assess what exists, ask what you bring, discover and verify the rest, show you the block, then write it. |
-| **Refresh** | The same run against an existing block: re-run its commands, diff deletions and renames since the recorded commit, update what moved. |
+| **Refresh** | The same run against an existing block: re-check its commands and caveats, diff deletions and renames since the recorded commit, update what moved. |
 | **Record** | Capture one observed agent mistake at the moment it happens. A recurring or costly one earns a line. |
 | **Audit** | Re-verify and prune. The block ends smaller or equal, never larger. |
 

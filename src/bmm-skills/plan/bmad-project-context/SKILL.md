@@ -30,27 +30,27 @@ No writes until step 5!
 
 ### 1. Assess and report
 
-Read `AGENTS.md`, harness or agent specific rule files, docs folders, and any notes carrying lessons. Report what exists and how it measures up, per `best-practices.md`.
+Read `AGENTS.md`, harness or agent specific rule files, docs folders, notes carrying lessons, and any agent session history or review corrections the user supplied. Report what exists and how it measures up, per `best-practices.md`.
 
 If the target contains separable units — a workspace manifest listing members, or directories carrying their own build manifest — name them and ask whether this run covers the root only, all of them, or which. Absent that evidence, do not ask. Sibling repositories are not children; each is its own target, offered in turn.
 
 ### 2. Ask what they bring
 
-Rules to follow regardless of what the repo does: governance, security and compliance, coding standards, style guides, frozen areas. Ask for outside documents too — handbooks, wikis, architecture docs, MCP knowledgebases. Note the paths; do not read them yet.
+Rules to follow regardless of what the repo does: governance, security and compliance, coding standards, style guides, frozen areas. Ask for outside documents and evidence too — handbooks, wikis, architecture docs, MCP knowledgebases, agent session history, review corrections. Note the paths; do not read them yet.
 
 Greenfield: this is the whole content. Brownfield: it is the half no scan reaches.
 
 ### 3. Discover and verify
 
-Fan out with parallel subagents against what the sections need — executable config and CI for policy and for what they already state, tracked source for conventions and boundaries, targeted history for constraints whose reason must still hold.
+Fan out with parallel subagents against what the sections need — executable config and CI for policy and for what they already state, tracked source for conventions and boundaries, targeted git history for constraints whose reason must still hold, supplied unaided session history for commands and mistakes agents get wrong.
 
-`package.json`, a `Makefile`, `pyproject.toml`, and CI config are read to know what the block must not repeat. Their caveats come from the human in step 4. Path-check every claim naming a file.
+`package.json`, a `Makefile`, `pyproject.toml`, and CI config are read to know what the block must not repeat. Unaided session history means sessions from before the instruction under review was present; it can earn an exact command that agents get wrong despite those sources. Other caveats come from the human in step 4. Path-check every claim naming a file.
 
 Each child agreed in step 1 is scanned as its own scope, against its own manifests.
 
 ### 4. Interview the gaps
 
-Only what no scan reaches: what agents keep getting wrong here, what is off limits, what a domain term means, why a constraint exists.
+Only what no scan or supplied session history reaches: what agents keep getting wrong here, what is off limits, what a domain term means, why a constraint exists.
 
 - Never ask what a scan could answer. Asking the user to confirm a path-checked claim, or one a config file already states, is a defect.
 - Ask recall questions, not review lists. Never hand the user a selection problem a scan created.
@@ -78,7 +78,7 @@ Never commit.
 
 ### Refresh
 
-Same steps, step 1 as a diff. Read the provenance line, re-verify every path and every caveat, and run `git log --diff-filter=DR --name-only` since the recorded SHA against every line — update or remove lines whose evidence is gone. Never re-ask what a prior run settled; the interview shrinks to what changed about how the team works. The block grows only on new evidence.
+Same steps, step 1 as a diff. Read the provenance line, re-verify every path and every caveat, and run `git log --diff-filter=DR --name-only` since the recorded SHA against every line — update or remove lines whose evidence is gone. Aided success alone does not justify removing a command admitted from unaided session history. Never re-ask what a prior run settled; the interview shrinks to what changed about how the team works. The block grows only on new evidence.
 
 ### Greenfield
 
@@ -90,15 +90,15 @@ If the target has a `project-context.md` from the retired skills, commonly under
 
 ## Record
 
-Capture one observed agent mistake as it happens — the only admissible source for a pitfall line.
+Capture one observed agent mistake as it happens — admissible evidence for a command agents get wrong or for a pitfall line.
 
-Take the task, the mistake, the correction, and its evidence. Check the block for a line already covering it. One occurrence is noted; a recurring or costly mistake earns a line now — write it, show the diff. If it is mechanically preventable, propose the hook, lint rule, or CI check instead.
+Take the task, the mistake, the correction, and its evidence. Check the block for a line already covering it. One occurrence is noted; a recurring or costly mistake earns a line now — an exact invocation under **Running and verifying** when it is a command error, otherwise a pitfall. Write it and show the diff. If it is mechanically preventable, propose the hook, lint rule, or CI check instead.
 
 ## Audit
 
 Re-check every caveat, path-check every file, follow every pointer, and ask of every line whether removing it would change agent behavior. Check for contradictions with other instruction files.
 
-Failing lines move behind an observable trigger, get fixed, or are deleted — confirm deletions first. **A policy or pitfall line goes only when the thing it guards is gone or the user retires it; nothing failing lately is not grounds.** Audit ends smaller or equal.
+Failing lines move behind an observable trigger, get fixed, or are deleted — confirm deletions first. **A policy or pitfall line goes only when the thing it guards is gone or the user retires it; nothing failing lately is not grounds. Aided success alone does not justify removing a command admitted from unaided history; remove it when stale, wrong, superseded, or deliberately retired.** Audit ends smaller or equal.
 
 ## Children
 
